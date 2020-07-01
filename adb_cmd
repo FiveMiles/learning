@@ -1,0 +1,14 @@
+adb logcat # 查看所有日志输出
+adb logcat # *:W #显示所有优先级大于等于warning的日志
+adb logcat -f /sdcard/test.text # 将日志输出到文件
+或者
+adb logcat > test.log
+
+android日志优先级，顺序是从低到高：
+V -明细 verbose （最低优先级）
+D -调试 debug
+I -信息 info
+W -警告 warning
+E -错误 error
+F -严重错误 fatal
+S -无记载 silent
