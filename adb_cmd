@@ -12,3 +12,17 @@ W -警告 warning
 E -错误 error
 F -严重错误 fatal
 S -无记载 silent
+
+
+用adb命令快速查看某应用appPackage及appActivity方法：
+adb shell pm list packages          # 列出所有包名
+adb shell dumpsys package xxx       # 查看某个包的具体信息 appActivity
+adb shell dumpsys activity | grep "mFocusedActivity"  # 查看当前resume的是哪个activity\
+或者
+adb shell dumpsys activity | grep "mResumedActivity"
+adb logcat | grep ActivityManager   # 查看管理正在运行的activity
+adb logcat | grep Displayed         # 查看在展示的activity
+
+# 查看当前运营应用、进程的包名与activity名
+adb shell dumpsys window | grep mCurrentFocus
+
