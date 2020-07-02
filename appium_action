@@ -32,10 +32,73 @@ from appium.webdriver.common.touch_action import TouchAction
 
 按压
 press()
-开始按压一个元素
+开始按压一个元素或坐标点(x,y),通过手指按压手机屏幕某个元素，也可以接收屏幕坐标；
 press(self, el=None, x=None, y=None)
 e:
 TouchAction(driver).press(x=0, y=230)
+
+长按
+方法longPress()按压一个元素或坐标点(x,y)；
+相比press()，longPress()多了一个入参duration，以毫秒为单位。1000ms表示1秒钟；用法与press()相同
+longPress(self, el=None, x=None, y=None, duration=1000)
+
+点击
+tap()对一个元素或控件执行点击操作
+tap(self, element=None, x=None, y=None, count=1)
+
+移动
+move_to()将指针从上一个点移动到指定的元素或点
+move_to(self, element=None, x=None, y=None)
+
+ps:
+移动到目的位置有时是计算绝对坐标点，有时是基于前面一个坐标点的偏移量，要结合实际；
+
+暂停
+wait() 暂停脚本的执行，单位 毫秒
+wait(self, ms=0)
+
+释放
+release()结束行动，取消屏幕上的指针
+release(self)
+
+执行
+perform()把执行的操作发送到服务器；
+perform(self)
+
+TouchAction九宫格滑动操作：
+TouchAction(driver).press(x=219, y=282).wait(1000).move_to(x=346, y=291).wait(1000) \
+        .move_to(x=523, y=279).wait(1000) \
+        .move_to(x=364, y=433).wait(1000) \
+        .move_to(x=216, y=576).wait(1000) \
+        .move_to(x=362, y=583).wait(1000) \
+        .move_to(x=514, y=585).wait(1000) \
+        .release().perform()
+
+
+三、多手势操作
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
