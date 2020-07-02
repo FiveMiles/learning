@@ -1,0 +1,11 @@
+python 标准模块 -- shlex
+
+shelx模块最常用的是split()函数，用来分割字符串，通常与subprocess结合使用；
+import shlex
+import subprocess
+
+cmd = 'adb shell am start bilibili://home'
+cmd = shlex.split(cmd)
+subprocess.Popen(cmd)
+
+具体使用
