@@ -1,1 +1,53 @@
 appium action 使用方法
+
+一、简单滑动方法
+在appium中模拟用户滑动操作需要swipe方法
+def swipe(self, start_x, start_y, end_x, end_y, duration=None):
+    # swipe from one point to another point, for an optional duration
+
+滑动解析：
+1、水平滑动；   # 固定y轴，改变x值
+2、垂直滑动；   # 固定x轴，改变y值；
+3、任意方向滑动；# x，y同时变化
+
+代码实现：
+def get_size():
+  return driver.get_window_size()
+
+
+def swipe_slide():
+  s_x = get_size().get('width')/2
+  s_y = get_size().get('height') / 2
+  e_x = s_x
+  e_y = s_y + 800
+  driver.swipe(s_x, s_y, e_x, e_y)
+ 
+ 
+二、连续滑动操作
+滑动一般是两点之间，连续滑动是是多点连续滑动操作。比如九宫格滑动、连续拖动图片移动等。
+appium中使用TouchAction实现
+TouchAction包含一系列操作，按压、长按、点击、移动、暂停。由这些不同操作可以组成一套动作。
+导入模块
+from appium.webdriver.common.touch_action import TouchAction
+
+按压
+press()
+开始按压一个元素
+press(self, el=None, x=None, y=None)
+e:
+TouchAction(driver).press(x=0, y=230)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
