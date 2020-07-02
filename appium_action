@@ -77,40 +77,59 @@ TouchAction(driver).press(x=219, y=282).wait(1000).move_to(x=346, y=291).wait(10
 
 三、多手势操作
 
+使用场景
+地图类app对界面进行缩放，用appium模拟实现？
 
+MultiAction
+MultiAction()是多点触控的类，可以模拟用户多点操作。
+主要包含add()和perform()方法。
+MultiAction结合ActionTouch可以模拟出用户的多个手指滑动的操作效果；
 
+导入库
+from appium.webdriver.common.multi_action import MultiAction
+from appium.webdriver.common.touch_action import TouchAction
 
+加载
+add(self, *touch_actions) 将TouchAction对象添加到MultiAction中，稍后再执行；
 
+    参数：
+touch_actions # 一个或多个TouchAction对象，描述一个手指要执行的动作链；
 
+用法
+a1 = TouchAction(driver)
+a2 = TouchAction(driver)
+a1.press(ele1).move_to(el2).release()
+a2.press(ele2).move_to(el1).release()
 
+MultiAction(driver).add(a1, a2)
 
+执行：
+perform(self)执行存储在对象中的操作
+MultiAction(driver).add(a1, a2).perform()
 
+ps:有点类似python中多线程和多进程的使用。
 
+多点触控操作实战 -- 地图app缩放
 
+代码实现
+def get_size():
+    size = driver.get_window_size()
+    x = size.get('width')
+    y = size.get('height')
+    return x,y
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+def enlarge():
+    x,y = get_size()
+    print(x,y)
+    
+    action1 = TouchAction(driver)
+    action2 = TouchAction(driver)
+    add_action = MultiAction()
+    action1.press(x=x*0.4, y=y*0.4).move_to(x=x*0.2, y=y*0.2).wait(1000).release()
+    action2.press(x=x*0.6, y=y*0.6).move_to(x=x*0.8, y=y*0.8).wait(1000).release()
+    add_action.add(action1, action2)
+    add_action.perform
+    
+    
+更多的用法，可以用adb实现
 
