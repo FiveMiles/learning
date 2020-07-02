@@ -26,3 +26,40 @@ adb logcat | grep Displayed         # 查看在展示的activity
 # 查看当前运营应用、进程的包名与activity名
 adb shell dumpsys window | grep mCurrentFocus
 
+#adb 模拟点击、滑动、输入、按键
+# 模拟输入001
+adb shell input text 001
+# 模拟home按键
+adb shell input keyevent 3
+# 模拟点击(540，1101)坐标
+adb shell input tap 540 1104
+# 模拟滑动，从(250,250)滑动到(300, 300)
+adb shell input swipe 250 250 300 300
+
+keyevent code:
+KEYCODE_HOME=3 # home键
+KEYCODE_BACK=4 # back键
+
+小结：键盘事件、点击事件、滑动事件等这些模拟事件都是通过adb工具输入input命令实现。
+输入文本
+input text <string>
+键盘事件
+input keyevent <keycode number or name>
+点击事件
+input tap <x> <y>
+滑动事件
+input swipe <x1> <x2> <x3> <x4>
+
+keyevent指的是android对应的keycode，比如home键keycode=3；
+关于tap，模拟的是touch屏幕的事件，只需给出x、y坐标即可；（x，y）对应
+的是真实的屏幕分辩率；
+swipe与tap相同，只是模拟滑动事件，给出起点和终点坐标即可。
+
+
+
+
+
+
+
+
+
