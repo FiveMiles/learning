@@ -1,0 +1,30 @@
+1、简单值
+使用let声明一个常量
+使用var声明一个变量
+常量的值在编译时并不要求已知，但是必须为其赋值一次；这一位置可以使用常量给一个值命名，然后一次定义多次使用；
+let myConstant = 42
+var myVariable = 23
+常量和变量必须和赋值的类型相同，但是不需要显式的写出类型，编译器在编译时会自动推断类型；
+
+显式指定类型
+let explicitDouble: Double
+或
+let explicitDouble: Double = 70
+
+类型转换
+值不会隐式地转换为其他类型，要强制转换
+let label = "the label is"
+let width = 94
+let widthLabel = label + String(width)
+
+将值加入字符串方法：将值写在圆括号中，然后在圆括号前面写一个反斜杠（\）
+let apples = 3
+let oranges = 5
+let appleSummary = "I have \(apples) apples"
+let fruitSummary = "I have \(apples + oranges) pieces of fruit"
+
+为字符串使用三个双引号(""")来一次输入多行内容：只要每一行的缩进与末尾的引号相同，这些缩进都会被移除
+let quotation = """
+I said "I have \(apples) apples"
+And then I said "I have \(apples + oranges) pieces of fruit"
+"""
