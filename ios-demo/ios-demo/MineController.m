@@ -9,7 +9,9 @@
 #import "MineController.h"
 
 @interface MineController ()
-@property(nonatomic,assign)CGRect viewRect;
+@property(nonatomic,assign)CGFloat width;
+@property(nonatomic,assign)CGFloat height;
+
 @property(nonatomic,strong)UIScrollView * scrollView;
 @property(nonatomic,strong)UIView * userCenter;
 @property(nonatomic,strong)UIView * createCenter;
@@ -23,12 +25,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.view.backgroundColor = [UIColor whiteColor];
     self.title = @"我的";
-    _viewRect = [UIScreen mainScreen].bounds;
-    
-    [self addScrollView];
+    _width = [UIScreen mainScreen].bounds.size.width;
+    _height = [UIScreen mainScreen].bounds.size.height;
     [self initSubViews];
+    [self configScrollView];
     [self configUserCenter];
     [self configCreateCenter];
     [self configRecommendService];
@@ -36,48 +37,166 @@
 }
 
 -(void)initSubViews{
-    _userCenter = [[UIView alloc]init];
-    _createCenter = [[UIView alloc]init];
-    _recommendService = [[UIView alloc]init];
-    _moreService = [[UIView alloc]init];
+    self.scrollView = [[UIScrollView alloc]init];
+    self.userCenter = [[UIView alloc]init];
+    self.createCenter = [[UIView alloc]init];
+    self.recommendService = [[UIView alloc]init];
+    self.moreService = [[UIView alloc]init];
     
     [_scrollView addSubview:_userCenter];
     [_scrollView addSubview:_createCenter];
     [_scrollView addSubview:_recommendService];
     [_scrollView addSubview:_moreService];
-}
-
-- (void)addScrollView{
-    self.scrollView = [[UIScrollView alloc]init];
-    _scrollView.frame = CGRectMake(0, 0, _viewRect.size.width, 5500);
-    _scrollView.backgroundColor = [UIColor grayColor];
-//    _scrollView.scrollEnabled = YES;
-    [self.view addSubview:_scrollView];
-}
-
-- (void)configUserCenter
-{
-    _userCenter.frame = CGRectMake(0, 0, _viewRect.size.width, 100);
-    _userCenter.backgroundColor = [UIColor orangeColor];
     
 }
 
+- (void)configScrollView{
+    _scrollView.frame = CGRectMake(0, 0, _width, _height);
+    _scrollView.backgroundColor = [UIColor whiteColor];
+    _scrollView.contentSize = CGSizeMake(_width, _height*1.2);
+//    _scrollView.scrollEnabled = YES;
+//    self.scrollView.delegate = self;
+    _scrollView.showsVerticalScrollIndicator = false;
+    [self.view addSubview:self.scrollView];
+}
+//用户
+- (void)configUserCenter
+{
+    _userCenter.frame = CGRectMake(0, 0, _width, 100);
+//    UIImageView * headerIcon = [[UIImageView alloc]init];
+//    headerIcon.frame = CGRectMake(10, 10, 60, 60);
+//    headerIcon.image = [UIImage imageNamed:@"face"];
+//    [headerIcon setNeedsDisplay];
+//    headerIcon.layer.cornerRadius = headerIcon.frame.size.width/2;
+//    headerIcon.layer.masksToBounds = true;
+//    [_userCenter addSubview:headerIcon];
+    
+    UIButton * headBtn = [[UIButton alloc]initWithFrame:CGRectMake(10, 10, 60, 60)];
+    [headBtn setImage:[UIImage imageNamed:@"face"] forState:UIControlStateNormal];
+    headBtn.imageView.layer.cornerRadius = headBtn.frame.size.width/2;
+    headBtn.imageView.layer.masksToBounds = true;
+    [headBtn addTarget:self action:@selector(btnClicked) forControlEvents:UIControlEventTouchUpInside];
+    [_userCenter addSubview:headBtn];
+    
+    UILabel * name = [[UILabel alloc]initWithFrame:CGRectMake(80, 20, 200, 20)];
+    name.text = @"cslive0222";
+    name.textColor = [UIColor systemPinkColor];
+    [_userCenter addSubview:name];
+    
+    
+    
+}
+
+- (void)btnClicked
+{
+    NSLog(@"22333~~");
+}
+
+//创作中心
 - (void)configCreateCenter
 {
-    _createCenter.frame = CGRectMake(0, CGRectGetMaxY(_userCenter.frame), _viewRect.size.width, 200);
-    _createCenter.backgroundColor = [UIColor blackColor];
+    _createCenter.frame = CGRectMake(0, CGRectGetMaxY(_userCenter.frame)+50, _width, 100);
+    
+    UILabel * centerLabel = [[UILabel alloc]initWithFrame:CGRectMake(6, 0, 100, 20)];
+    centerLabel.text = @"创作中心";
+    centerLabel.textColor = [UIColor blackColor];
+    centerLabel.font = [UIFont systemFontOfSize:17 weight:UIFontWeightBold];
+    [_createCenter addSubview:centerLabel];
+    
+    NSArray * namelist = [NSArray arrayWithObjects:@"创作首页", @"稿件管理", @"创作激励", @"热门活动", nil];
+    for (int i =0; i<namelist.count; i++) {
+        UIImageView * imageView0 = [[UIImageView alloc]initWithFrame:CGRectMake(50 + i*(_width/4 - 10), 40, 30, 30)];
+        imageView0.image = [UIImage imageNamed:namelist[i]];
+        
+        [_createCenter addSubview:imageView0];
+        
+        UILabel * label0 = [[UILabel alloc]initWithFrame:CGRectMake(35 + i*(_width/4 - 10), CGRectGetMaxY(imageView0.frame)+10, 60, 15)];
+        label0.text = namelist[i];
+        label0.font = [UIFont systemFontOfSize:13 weight:UIFontWeightRegular];
+        [_createCenter addSubview:label0];
+    }
 }
 
+
+//推荐服务
 - (void)configRecommendService
 {
-    _recommendService.frame = CGRectMake(0, CGRectGetMaxY(_createCenter.frame), _viewRect.size.width, 200);
-    _recommendService.backgroundColor = [UIColor greenColor];
+    _recommendService.frame = CGRectMake(0, CGRectGetMaxY(_createCenter.frame)+20, _width, 280);
+//    _recommendService.backgroundColor = [UIColor greenColor];
+
+    UILabel * centerLabel = [[UILabel alloc]initWithFrame:CGRectMake(6, 0, 100, 20)];
+    centerLabel.text = @"推荐服务";
+    centerLabel.textColor = [UIColor blackColor];
+    centerLabel.font = [UIFont systemFontOfSize:17 weight:UIFontWeightBold];
+    [_recommendService addSubview:centerLabel];
+    
+    NSArray * namelist = [NSArray arrayWithObjects:@"我的课程", @"看视频免流量", @"个性装扮", @"邀好友赚红包", nil];
+    for (int i =0; i<namelist.count; i++) {
+        UIImageView * imageView0 = [[UIImageView alloc]initWithFrame:CGRectMake(50 + i*(_width/4 - 10), 40, 30, 30)];
+        imageView0.image = [UIImage imageNamed:namelist[i]];
+        
+        [_recommendService addSubview:imageView0];
+        
+        UILabel * label0 = [[UILabel alloc]initWithFrame:CGRectMake(35 + i*(_width/4 - 10), CGRectGetMaxY(imageView0.frame)+10, 85, 15)];
+        label0.text = namelist[i];
+        label0.font = [UIFont systemFontOfSize:13 weight:UIFontWeightRegular];
+        [_recommendService addSubview:label0];
+    }
+    
+    NSArray * namelist2 = [NSArray arrayWithObjects:@"游戏中心", @"我的钱包", @"会员购中心", @"直播中心", nil];
+    for (int i =0; i<namelist2.count; i++) {
+        UIImageView * imageView0 = [[UIImageView alloc]initWithFrame:CGRectMake(50 + i*(_width/4 - 10), 120, 30, 30)];
+        imageView0.image = [UIImage imageNamed:namelist2[i]];
+        
+        [_recommendService addSubview:imageView0];
+        
+        UILabel * label0 = [[UILabel alloc]initWithFrame:CGRectMake(35 + i*(_width/4 - 10), CGRectGetMaxY(imageView0.frame)+10, 85, 15)];
+        label0.text = namelist2[i];
+        label0.font = [UIFont systemFontOfSize:13 weight:UIFontWeightRegular];
+        [_recommendService addSubview:label0];
+    }
+    
+    NSArray * namelist3 = [NSArray arrayWithObjects:@"创作学院", @"反馈论坛", @"BW乐园", nil];
+    for (int i =0; i<namelist3.count; i++) {
+        UIImageView * imageView0 = [[UIImageView alloc]initWithFrame:CGRectMake(50 + i*(_width/4 - 10), 200, 30, 30)];
+        imageView0.image = [UIImage imageNamed:namelist3[i]];
+        
+        [_recommendService addSubview:imageView0];
+        
+        UILabel * label0 = [[UILabel alloc]initWithFrame:CGRectMake(35 + i*(_width/4 - 10), CGRectGetMaxY(imageView0.frame)+10, 85, 15)];
+        label0.text = namelist3[i];
+        label0.font = [UIFont systemFontOfSize:13 weight:UIFontWeightRegular];
+        [_recommendService addSubview:label0];
+    }
+    
 }
 
+//更多设置
 -(void)configMoreService
 {
-    _moreService.frame = CGRectMake(0, CGRectGetMaxY(_recommendService.frame), _viewRect.size.width, 200);
-    _moreService.backgroundColor = [UIColor purpleColor];
+    _moreService.frame = CGRectMake(0, CGRectGetMaxY(_recommendService.frame)+10, _width, 200);
+//    _moreService.backgroundColor = [UIColor purpleColor];
+    
+    UILabel * centerLabel = [[UILabel alloc]initWithFrame:CGRectMake(6, 0, 100, 20)];
+    centerLabel.text = @"更多服务";
+    centerLabel.textColor = [UIColor blackColor];
+    centerLabel.font = [UIFont systemFontOfSize:17 weight:UIFontWeightBold];
+    [_moreService addSubview:centerLabel];
+    
+    
+    NSArray * namelist3 = [NSArray arrayWithObjects:@"联系客服", @"课堂模式", @"青少年模式", @"设置", nil];
+    for (int i =0; i<namelist3.count; i++) {
+        UIImageView * imageView0 = [[UIImageView alloc]initWithFrame:CGRectMake(40, 40 + i*40, 25, 25)];
+        imageView0.image = [UIImage imageNamed:namelist3[i]];
+        
+        [_moreService addSubview:imageView0];
+        
+        UILabel * label0 = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(imageView0.frame)+10, 45+i*40, 85, 15)];
+        label0.text = namelist3[i];
+        label0.font = [UIFont systemFontOfSize:14 weight:UIFontWeightRegular];
+        [_moreService addSubview:label0];
+    }
+    
 }
 
 @end
