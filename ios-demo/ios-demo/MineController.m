@@ -54,8 +54,6 @@
     _scrollView.frame = CGRectMake(0, 0, _width, _height);
     _scrollView.backgroundColor = [UIColor whiteColor];
     _scrollView.contentSize = CGSizeMake(_width, _height*1.2);
-//    _scrollView.scrollEnabled = YES;
-//    self.scrollView.delegate = self;
     _scrollView.showsVerticalScrollIndicator = false;
     [self.view addSubview:self.scrollView];
 }
@@ -63,14 +61,6 @@
 - (void)configUserCenter
 {
     _userCenter.frame = CGRectMake(0, 0, _width, 100);
-//    UIImageView * headerIcon = [[UIImageView alloc]init];
-//    headerIcon.frame = CGRectMake(10, 10, 60, 60);
-//    headerIcon.image = [UIImage imageNamed:@"face"];
-//    [headerIcon setNeedsDisplay];
-//    headerIcon.layer.cornerRadius = headerIcon.frame.size.width/2;
-//    headerIcon.layer.masksToBounds = true;
-//    [_userCenter addSubview:headerIcon];
-    
     UIButton * headBtn = [[UIButton alloc]initWithFrame:CGRectMake(10, 10, 60, 60)];
     [headBtn setImage:[UIImage imageNamed:@"face"] forState:UIControlStateNormal];
     headBtn.imageView.layer.cornerRadius = headBtn.frame.size.width/2;
@@ -82,9 +72,6 @@
     name.text = @"cslive0222";
     name.textColor = [UIColor systemPinkColor];
     [_userCenter addSubview:name];
-    
-    
-    
 }
 
 - (void)btnClicked
@@ -105,18 +92,26 @@
     
     NSArray * namelist = [NSArray arrayWithObjects:@"创作首页", @"稿件管理", @"创作激励", @"热门活动", nil];
     for (int i =0; i<namelist.count; i++) {
-        UIImageView * imageView0 = [[UIImageView alloc]initWithFrame:CGRectMake(50 + i*(_width/4 - 10), 40, 30, 30)];
-        imageView0.image = [UIImage imageNamed:namelist[i]];
+        UIButton * btn = [[ UIButton alloc]initWithFrame:CGRectMake(35 + i*(_width/4 - 10), 40, 60, 60)];
+        [btn setImage:[UIImage imageNamed:namelist[i]] forState:UIControlStateNormal];
+        [btn setImage:[UIImage imageNamed:namelist[i]] forState:UIControlStateSelected];
+        [btn setImageEdgeInsets:UIEdgeInsetsMake(0, 14, 25, 14)];
+        btn.tag = i;
+        [btn setTitle:namelist[i] forState:UIControlStateNormal];
+        [btn setTitleEdgeInsets:UIEdgeInsetsMake(45, -60, 0, -30)];
+        btn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
+        [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        btn.titleLabel.font = [UIFont systemFontOfSize:13 weight:UIFontWeightRegular];
+        [btn addTarget:self action:@selector(btnCenter:) forControlEvents:UIControlEventTouchUpInside];
+        [_createCenter addSubview:btn];
         
-        [_createCenter addSubview:imageView0];
-        
-        UILabel * label0 = [[UILabel alloc]initWithFrame:CGRectMake(35 + i*(_width/4 - 10), CGRectGetMaxY(imageView0.frame)+10, 60, 15)];
-        label0.text = namelist[i];
-        label0.font = [UIFont systemFontOfSize:13 weight:UIFontWeightRegular];
-        [_createCenter addSubview:label0];
     }
 }
 
+-(void)btnCenter:(UIButton *)btn
+{
+    NSLog(@"%ld", btn.tag);
+}
 
 //推荐服务
 - (void)configRecommendService
@@ -163,12 +158,11 @@
         
         [_recommendService addSubview:imageView0];
         
-        UILabel * label0 = [[UILabel alloc]initWithFrame:CGRectMake(35 + i*(_width/4 - 10), CGRectGetMaxY(imageView0.frame)+10, 85, 15)];
+        UILabel * label0 = [[UILabel alloc]initWithFrame:CGRectMake(42 + i*(_width/4 - 10), CGRectGetMaxY(imageView0.frame)+10, 85, 15)];
         label0.text = namelist3[i];
         label0.font = [UIFont systemFontOfSize:13 weight:UIFontWeightRegular];
         [_recommendService addSubview:label0];
     }
-    
 }
 
 //更多设置
@@ -183,7 +177,6 @@
     centerLabel.font = [UIFont systemFontOfSize:17 weight:UIFontWeightBold];
     [_moreService addSubview:centerLabel];
     
-    
     NSArray * namelist3 = [NSArray arrayWithObjects:@"联系客服", @"课堂模式", @"青少年模式", @"设置", nil];
     for (int i =0; i<namelist3.count; i++) {
         UIImageView * imageView0 = [[UIImageView alloc]initWithFrame:CGRectMake(40, 40 + i*40, 25, 25)];
@@ -196,7 +189,6 @@
         label0.font = [UIFont systemFontOfSize:14 weight:UIFontWeightRegular];
         [_moreService addSubview:label0];
     }
-    
 }
 
 @end
