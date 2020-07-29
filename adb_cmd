@@ -56,6 +56,9 @@ keyevent指的是android对应的keycode，比如home键keycode=3；
 swipe与tap相同，只是模拟滑动事件，给出起点和终点坐标即可。
 
 
+adb 截图
+adb shell -s ${deviceid} screencap /sdcard/23.png
+adb -s ${deviceid} pull /sdcard/23.png > Desktop/hello.png
 
 
 
