@@ -97,6 +97,8 @@
         [btn setImage:[UIImage imageNamed:namelist[i]] forState:UIControlStateSelected];
         [btn setImageEdgeInsets:UIEdgeInsetsMake(0, 14, 25, 14)];
         btn.tag = i;
+        btn.accessibilityIdentifier = [NSString stringWithFormat:@"%d", i];
+        
         [btn setTitle:namelist[i] forState:UIControlStateNormal];
         [btn setTitleEdgeInsets:UIEdgeInsetsMake(45, -60, 0, -30)];
         btn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
@@ -104,7 +106,6 @@
         btn.titleLabel.font = [UIFont systemFontOfSize:13 weight:UIFontWeightRegular];
         [btn addTarget:self action:@selector(btnCenter:) forControlEvents:UIControlEventTouchUpInside];
         [_createCenter addSubview:btn];
-        
     }
 }
 
